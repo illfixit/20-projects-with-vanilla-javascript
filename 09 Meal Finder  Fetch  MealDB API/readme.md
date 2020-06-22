@@ -3,8 +3,7 @@
 
 <h2 align="center">Search and generate random meals from the www.themealdb.com API</h2>
 
-<h3 align="center"><srtong>Project</strong> Specifications</h3>
-<h1> </h1>
+<p align="center"><b>Project Specifications</b></p>
 <ul align="center">
 <li>Display UI with form to search and button to generate</li>
 <li>Connect to API and get meals</li>
