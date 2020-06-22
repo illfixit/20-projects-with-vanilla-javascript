@@ -1,9 +1,9 @@
 <h1></h1>
 <h1 align="center"><strong>Meal Finder App</strong></h1>
 
-<h3 align="center">Search and generate random meals from the www.themealdb.com API</h2>
+<h2 align="center">Search and generate random meals from the www.themealdb.com API</h2>
 
-<div align="center"><srtong>Project</strong> Specifications</div>
+<h3 align="center"><srtong>Project</strong> Specifications</h3>
 <h1> </h1>
 <ul align="center">
 <li>Display UI with form to search and button to generate</li>
