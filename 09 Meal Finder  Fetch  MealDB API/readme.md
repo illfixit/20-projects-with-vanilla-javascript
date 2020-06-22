@@ -12,5 +12,5 @@
 <h5 align="center"><b>+</b> Click on generate button and fetch & display a random meal</h5>
 <br/>
 <p align="center">
-  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/09%20Meal%20Finder%20%20Fetch%20%20MealDB%20API/images/Screenshot_Meal_Finder.png?raw=true">
+  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/09%20Meal%20Finder%20%20Fetch%20%20MealDB%20API/screenshot.png?raw=true">
 </p>
