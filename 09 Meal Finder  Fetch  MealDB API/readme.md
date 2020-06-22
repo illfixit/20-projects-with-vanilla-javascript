@@ -10,5 +10,4 @@ Search and generate random meals from the [themealdb.com](www.themealdb.com) API
 - Click on meal and see the details
 - Click on generate button and fetch & display a random meal
 
-![GitHub Logo](/images/Screenshot_Meal_Finder.png)
-Format: ![Alt Text](url)
+![alt screenshot](https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/09%20Meal%20Finder%20%20Fetch%20%20MealDB%20API/images/Screenshot_Meal_Finder.png?raw=true)
