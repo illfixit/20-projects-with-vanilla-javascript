@@ -7,7 +7,7 @@
 
 <h5 align="center"><b>+</b> Create UI for music player including spinning image and song detail popup</h5>
 <h5 align="center"><b>+</b> Add play and pause functionality</h5>
-<h5 align="center"><b>+</b> - Switch songs
+<h5 align="center"><b>+</b> Switch songs
 </h5>
 <h5 align="center"><b>+</b> Progress bar</h5>
 
