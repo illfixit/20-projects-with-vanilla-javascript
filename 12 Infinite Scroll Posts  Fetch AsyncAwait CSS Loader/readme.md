@@ -12,5 +12,5 @@
 
 <br/>
 <p align="center">
-  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/12%20Infinite%20Scroll%20Posts%20%20Fetch%20AsyncAwait%20CSS%20Loader/images/screenshot.png?raw=true">
+  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/12%20Infinite%20Scroll%20Posts%20%20Fetch%20AsyncAwait%20CSS%20Loader/IMG/screenshot.png?raw=true">
 </p>
