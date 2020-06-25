@@ -13,6 +13,6 @@
 
 <br/>
 <div align="center">
-  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/14%20Speech%20Text%20Reader%20%20Speech%20Synthesis/IMG/screenshot.png?raw=true">
-  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/14%20Speech%20Text%20Reader%20%20Speech%20Synthesis/IMG/screenshot.png1?raw=true">
+  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/14%20Speech%20Text%20Reader%20%20Speech%20Synthesis/img/screenshot.png?raw=true">
+  <img src="https://github.com/eslessons/20-projects-with-vanilla-javascript/blob/master/14%20Speech%20Text%20Reader%20%20Speech%20Synthesis/img/screenshot1.png?raw=true">
 </div>
