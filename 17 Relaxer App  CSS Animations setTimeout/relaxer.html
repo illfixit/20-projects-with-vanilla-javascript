@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			background: #224941 url('./img/bg.jpg') no-repeat center center;
+			color: #fff;
+			font-family: 'Montserrat', sans-serif;
+			min-height: 100vh;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 0;
+		}
+
+		.container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: auto;
+			height: 300px;
+			width: 300px;
+			position: relative;
+			transform: scale(1);
+		}
+
+		.circle {
+			background-color: #010f1c;
+			height: 100%;
+			width: 100%;
+			border-radius: 50%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+		}
+
+		.circle > img {
+			height: 100%;
+			width: 100%;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.gradient-circle {
+			background: conic-gradient(
+				#55b7a4 0%,
+				#4ca493 50%,
+				#336d62 50%,
+				#2a5b52 100%
+				);
+			border-radius: 50%;
+			height: 320px;
+			width: 320px;
+			z-index: 2;
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			z-index: -2;
+		}
+
+		.pointer {
+			background-color: #fff;
+			border-radius: 50%;
+			height: 20px;
+			width: 20px;
+			display: block;
+		}
+
+		.pointer-container {
+			position: absolute;
+			top: -40px;
+			left: 140px;
+			width: 20px;
+			height: 190px;
+			/* animation: rotate 20s linear forwards infinite; */
+			transform-origin: bottom center;
+		}
+
+		@keyframes rotate {
+			from {
+				transform: rotate(0deg);
+			}
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.container.grow {
+			animation: grow 10s linear forwards;
+		}
+
+		@keyframes grow {
+			from {
+				transform: scale(1);
+			}
+			to {
+				transform: scale(1.1);
+			}
+		}
+
+		.container.shrink {
+			animation: shrink 10s linear forwards;
+		}
+
+		@keyframes shrink {
+			from {
+				transform: scale(1.1);
+			}
+			to {
+				transform: scale(1);
+			}
+		}
+
+	</style>
+	<title>Relaxer</title>
+</head>
+<body>
+	<h1>Relaxer</h1>
+
+	<div class="container" id="container">
+		<div class="circle">
+			<img src="img/bg.jpg" id="image" />
+		</div>
+
+		<p id="text"></p>
+
+		<div class="pointer-container" id="pointer-container">
+			<span class="pointer"></span>
+		</div>
+
+		<div class="gradient-circle"></div>
+	</div>
+
+	<script>
+		const container = document.getElementById('container');
+		const pointer = document.getElementById('pointer-container');
+		const image = document.getElementById('image');
+		const text = document.getElementById('text');
+
+		container.classList.add('grow');
+		pointer.style.animation = 'rotate 20s linear forwards infinite';
+		text.innerText = 'Breath In';
+		let i = 0;
+
+		setInterval(() => {
+			text.innerText === 'Breath In'
+			? (text.innerText = 'Breath Out')
+			: (text.innerText = 'Breath In');
+			container.classList.toggle('grow');
+			container.classList.toggle('shrink');
+			image.src = images[i];
+			i++;
+			if (i === images.length) {
+				i = 0;
+			}
+		}, 10000);
+
+		const images = [
+		'https://disco.scrolller.com/media/2050e9.jpg',
+		'https://disco.scrolller.com/media/2031ab.jpg',
+		'https://disco.scrolller.com/media/1fd902.jpg',
+		'https://disco.scrolller.com/media/206b0f.jpg',
+		'https://disco.scrolller.com/media/21470e.jpg',
+		'https://disco.scrolller.com/media/2013e5.jpg',
+		'https://disco.scrolller.com/media/2149a3.jpg',
+		'https://disco.scrolller.com/media/2c6d74.jpg',
+		'https://disco.scrolller.com/media/21228b.jpg',
+		'https://disco.scrolller.com/media/202137.jpg',
+		];
+
+	</script>
+</body>
+</html>
