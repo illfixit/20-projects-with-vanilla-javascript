@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <style>
+        @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #e1e1e1 url('https://unsplash.com/photos/b2qszO9C7sw/download?force=true&w=640')  center center;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      backdrop-filter: blur(3px);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      height: 300px;
+      width: 300px;
+      position: relative;
+      transform: scale(1);
+    }
+
+    .circle {
+      background-color: rgba(225, 225, 225, 0.35);
+      height: 300px;
+      width: 300px;
+      border: 5px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .circle > img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+
+    }
+
+/*    .gradient-circle {
+      background: rgba(220, 220, 220, 0.4);
+
+         background: conic-gradient(
+        rgba(200, 200, 200, 0.3) 0%,
+        rgba(220, 220, 220, 0.8)  50%,
+        rgba(220, 220, 220, 0.6)  50%,
+        rgba(200, 200, 200, 0.8)  100%
+        );
+
+      background-color: #f1f1f1;
+      border-radius: 50%;
+      height: 320px;
+      width: 320px;
+      box-shadow: 0px 0px 50px 3px #aaa;
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      z-index: -2;
+    }
+*/
+    .subreddit-container {
+      color: #111;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    input  {
+      border: none;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #000;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+      height: 24px;
+      margin-top: 10px;
+    }
+
+    .sorting {
+      color: #111;
+    }
+
+    button {
+      border-radius: 15px;
+      font-weight: 600;
+      color: #555;
+      border: 1px solid  #b1b1b1;
+      background-color: #d1d1d1;
+      text-align: center;
+    }
+
+    button:active {
+      outline: none;
+      background-color: #b1b1b1;
+    }
+
+    .text {
+      position: absolute;
+      bottom: -2.5px;
+      opacity: 0.8;
+    }
+
+    .pointer {
+      background-color: #fff;
+      border-radius: 50%;
+      height: 20px;
+      width: 20px;
+      display: block;
+    }
+
+    .pointer-container {
+      position: absolute;
+      top: -40px;
+      left: 140px;
+      width: 20px;
+      height: 190px;
+      /* animation: rotate 20s linear forwards infinite; */
+      transform-origin: bottom center;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .container.grow {
+      animation: grow 6s ease-in-out forwards;
+    }
+
+    @keyframes grow {
+      from {
+        transform: scale(0.9);
+      }
+      to {
+        transform: scale(1.5);
+      }
+    }
+
+    .container.shrink {
+      animation: shrink 6s ease-in-out forwards;
+    }
+
+    @keyframes shrink {
+      from {
+        transform: scale(1.5);
+      }
+      to {
+        transform: scale(0.9);
+      }
+    }
+  </style>
+  <title>Let it...</title>
+</head>
+<body>
+  <h1>Let it...</h1>
+
+  <div class="container" id="container">
+    <div class="circle">
+      <img  id="image" class="hidden" />
+    </div>
+    <div id="subreddit-container" class="subreddit-container">The name of subreddit...<br/>
+    <input id="subreddit" autofocus></div>
+    <div id="sorting" class="sorting hidden">Sorting by: 
+      <button id="sort-by-hot">hot</button>
+      <button id="sort-by-top">top</button>
+    </div>
+    <p id="text" class="text"></p>
+
+    <div class="pointer-container" id="pointer-container">
+      <span class="pointer"></span>
+    </div>
+
+    <div class="gradient-circle"></div>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+const pointer = document.getElementById('pointer-container');
+const image = document.getElementById('image');
+const text = document.getElementById('text');
+const subredditContainer = document.getElementById('subreddit-container');
+const subreddit = document.getElementById('subreddit');
+const sorting = document.getElementById('sorting');
+const sortByHot = document.getElementById('sort-by-hot');
+const sortByTop = document.getElementById('sort-by-top');
+
+let subredditName = ''
+let hotImages = [];
+let topImages = [];
+
+let hotResult;
+let topResult;
+
+function chooseSubreddit() {
+
+  subreddit.addEventListener('keydown', (e => {
+    if (e.which == 13 || e.keyCode == 13 || e.key === 'Enter') {
+      if(subreddit.value) {
+        subredditName = subreddit.value.trim();
+        subreddit.value = '';
+        subreddit.style.display = 'none';
+        subredditContainer.style.display = 'none';
+        sorting.classList.remove('hidden');
+
+        fetchImages(subredditName);
+      } 
+    }
+  }))
+
+  subreddit.addEventListener('input', (e) => { 
+   })
+
+}
+
+
+function fetchImages(subredditName) {
+
+  hotResult = fetch(`https://www.reddit.com/r/${subredditName}.json`)
+      .then(res => res.json())
+        .then(data => { return data.data.children.map(data => data.data);})
+          .then(results =>  { results.forEach(post => { 
+              if (post.preview) {
+                // hotImages.push(post.preview.images[0].source.url.replace(/amp;/gi,""))
+                let index =  Math.floor(post.preview.images[0].resolutions.length/2);
+                // console.log(index);
+                hotImages.push(post.preview.images[0].resolutions[index].url.replace(/amp;/gi,""))
+            }}
+            )})
+
+  topResult = fetch(`https://www.reddit.com/r/${subredditName}/top.json?t=all`)
+      .then(res => res.json())
+        .then(data => { return data.data.children.map(data => data.data);})
+          .then(results =>  { results.forEach(post => {
+                          if (post.preview) {
+                      // topImages.push(post.preview.images[0].source.url.replace(/amp;/gi,""))
+                      let index =  Math.floor(post.preview.images[0].resolutions.length/2);
+                      topImages.push(post.preview.images[0].resolutions[index].url.replace(/amp;/gi,""))
+                   }}
+              )})
+   
+
+    sortByHot.addEventListener('click', ()=> { 
+    sorting.classList.add('hidden');
+    startMeditation(hotResult, 'hot');
+  });
+
+  sortByTop.addEventListener('click', ()=> { 
+    sorting.classList.add('hidden');
+    startMeditation(topResult, 'top');
+  });
+}
+
+function startMeditation(result, s) {
+
+  if (s === 'hot') {
+    images = hotImages;
+  } else if (s === 'top') {
+    images = topImages;
+  }
+
+  text.innerText = 'Breath In';
+  let i = 1;
+  image.src = images[0];
+
+     result.then(() => {
+      container.classList.add('grow');
+      image.classList.remove('hidden');
+      setInterval(() => {
+      text.innerText === 'Breath In'
+      ? (text.innerText = 'Breath Out')
+      : (text.innerText = 'Breath In');
+      container.classList.toggle('grow');
+      container.classList.toggle('shrink');
+      image.src = images[i];
+      i++;
+    }, 6000);
+  pointer.style.animation = 'rotate 12s linear forwards infinite';
+     })
+}
+
+chooseSubreddit();
+
+  </script>
+</body>
+</html>
