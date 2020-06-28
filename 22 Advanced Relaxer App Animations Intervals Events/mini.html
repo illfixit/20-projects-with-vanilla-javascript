@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #e1e1e1
+          url('https://unsplash.com/photos/sbcIAn4Mn14/download?force=true&w=640')
+          center center;
+        /*background: #e1e1e1 url('https://unsplash.com/photos/b2qszO9C7sw/download?force=true&w=640')  center center;*/
+        background-size: cover;
+        color: #fff;
+        font-family: 'Montserrat', sans-serif;
+        min-height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        /*backdrop-filter: blur(3px);*/
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .image {
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        object-fit: cover;
+      }
+
+      .breath {
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        width: 100vw;
+        height: 0vh;
+        bottom: 0;
+        background-color: rgba(255, 255, 250, 0.35);
+        z-index: 10;
+      }
+
+      .breath.grow {
+        height: 100vh;
+        transition: height 6s ease-in-out;
+        z-index: 10;
+      }
+
+      .breath.shrink {
+        height: 0vh;
+        transition: height 6s ease-in-out;
+        z-index: 10;
+      }
+    </style>
+    <title>Let it...</title>
+  </head>
+  <body>
+    <img id="image" class="image hidden" />
+    <div id="breath" class="breath"></div>
+    <script>
+      const container = document.getElementById('container');
+      const imageContainer = document.getElementById('image-container');
+      const image = document.getElementById('image');
+      const text = document.getElementById('text');
+      const subredditContainer = document.getElementById('subreddit-container');
+      const subreddit = document.getElementById('subreddit');
+      const sorting = document.getElementById('sorting');
+      const sortByHot = document.getElementById('sort-by-hot');
+      const sortByTop = document.getElementById('sort-by-top');
+      const ok = document.getElementById('ok');
+      const breath = document.getElementById('breath');
+
+      let subredditName = 'art';
+      let result = [];
+      let images = [];
+
+      function fetchImages(subredditName) {
+        result = fetch(
+          `https://www.reddit.com/r/${subredditName}/top.json?t=all&limit=100`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            afterHot = data.data.after;
+            return data.data.children.map((data) => data.data);
+          })
+          .then((results) => {
+            results.forEach((post) => {
+              afterTop = results[results.length - 1].name;
+              if (post.preview) {
+                images.push(
+                  post.preview.images[0].source.url.replace(/amp;/gi, '')
+                );
+                // let index =  Math.floor(post.preview.images[0].resolutions.length/2);
+                // topImages.push(post.preview.images[0].resolutions[index].url.replace(/amp;/gi,""))
+              }
+            });
+          });
+        return result;
+      }
+
+      function downloadMoreImages() {
+        fetch(
+          `https://www.reddit.com/r/${subredditName}/top.json?t=all&after=${afterTop}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            return data.data.children.map((data) => data.data);
+          })
+          .then((results) => {
+            results.forEach((post) => {
+              if (post.preview) {
+                // topImages.push(post.preview.images[0].source.url.replace(/amp;/gi,""))
+                let index = Math.floor(
+                  post.preview.images[0].resolutions.length / 2
+                );
+                images.push(
+                  post.preview.images[0].resolutions[index].url.replace(
+                    /amp;/gi,
+                    ''
+                  )
+                );
+              }
+            });
+          });
+      }
+
+      function startMeditation(result) {
+        let i = 0;
+
+        fetchImages(subredditName).then(() => {
+          image.src = images[0];
+          breath.classList.add('grow');
+          image.classList.remove('hidden');
+
+          setInterval(() => {
+            breath.classList.toggle('grow');
+            breath.classList.toggle('shrink');
+          }, 6000);
+
+          setInterval(() => {
+            i++;
+            image.src = images[i];
+            if (i > images.length - 2) {
+              downloadMoreImages();
+            }
+          }, 12000);
+        });
+      }
+
+      startMeditation();
+    </script>
+  </body>
+</html>
